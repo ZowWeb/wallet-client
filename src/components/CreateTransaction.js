@@ -7,16 +7,17 @@ import { GlobalContext } from '../context/GlobalState'
 const { Title } = Typography
 
 const CreateTransaction = () => {
-  const { message, setMessage, wallet, setWallet } = useContext(GlobalContext)
+  const { message, setMessage, setWallet } = useContext(GlobalContext)
   const [ form ] = Form.useForm()
   const onFinish = async values => {
     let { amount, type = true, description } = values
     amount = type ? +amount : -amount
     try {
       const { walletId } = localStorage
-      await axios.post(`/api/transact/${walletId}`, { amount, description })
+      const res = await axios.post(`/api/transact/${walletId}`, { amount, description })
       setWallet(walletId)
       form.resetFields()
+      setMessage(res.data)
     } catch (error) {
       setMessage(error.response?.data)
       form.resetFields()
@@ -68,7 +69,7 @@ const CreateTransaction = () => {
         </Form.Item>
       </Form>
       {message?.error && notification.error({ message: message.error })}
-      {wallet?.balance && notification.success({ message: `Transaction successful. Balance remaining: ${wallet.balance}` })}
+      {message?.balance && notification.success({ message: `Transaction successful. Balance remaining: ${message?.balance}` })}
     </>
   )
 }

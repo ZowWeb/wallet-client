@@ -23,8 +23,34 @@
   justify-content: flex-end;
 }
 
-.ant-menu-item.balance .ant-menu-title-content {
+.ant-menu-item.wallet {
+  background: #1890ff;
+}
+
+.ant-menu-item.wallet .ant-menu-title-content {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.ant-menu-item.wallet .ant-typography {
+  color: #fff;
+  margin-bottom: 0;
+  margin-left: 5px;
+}
+
+.ant-menu-item.wallet img {
+  width: 30px;
+  filter: invert(1);
+}
+
+.ant-form-item {
+  flex-wrap: nowrap;
+}
+
+.ant-form-item-control {
+  min-width: 300px;
 }
 
 .ant-input-number {

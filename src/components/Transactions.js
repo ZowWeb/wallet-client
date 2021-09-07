@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
-import { Typography, Table, Divider, Tag } from 'antd'
+import { Typography, Table, Divider, Tag, Button } from 'antd'
+import { CSVLink } from 'react-csv'
 
 import { GlobalContext } from '../context/GlobalState'
 
@@ -10,6 +11,14 @@ const { Column } = Table
 const Transactions = () => {
   const { wallet, setMessage } = useContext(GlobalContext)
   const [ transactions, setTransactions ] = useState([])
+
+  // Prepare CSV data
+  const csvData = [
+    [ 'Date', 'Type', 'Amount (₹)', 'Description', 'Balance (₹)' ],
+  ]
+  transactions.forEach(({ date, type, amount, description, balance }) => csvData.push(
+    [ new Date(date).toLocaleDateString(), type, amount, description, balance ],
+  ))
 
   // Get all transactions
   useEffect(async () => {
@@ -25,8 +34,14 @@ const Transactions = () => {
   return (
     <>
       <Divider><Title level={2}>Transactions</Title></Divider>
-      <Table dataSource={transactions}>
-        <Column title="Date" dataIndex="date" key="date" />
+      <Table dataSource={transactions} bordered>
+        <Column
+          title="Date"
+          dataIndex="date"
+          key="date"
+          sorter={(a, b) => new Date(a.date) - new Date(b.date)}
+          render={date => <div>{new Date(date).toLocaleDateString()}</div>}
+        />
         <Column
           title="Type"
           dataIndex="type"
@@ -37,10 +52,13 @@ const Transactions = () => {
             </Tag>
           )}
         />
-        <Column title="Amount" dataIndex="amount" key="amount" />
+        <Column title="Amount (&#8377;)" dataIndex="amount" key="amount" sorter={(a, b) => a.amount - b.amount} />
         <Column title="Description" dataIndex="description" key="description" />
-        <Column title="Balance" dataIndex="balance" key="balance" />
+        <Column title="Balance (&#8377;)" dataIndex="balance" key="balance" />
       </Table>
+      <Button type="primary">
+        <CSVLink data={csvData} filename={`wallet-${wallet._id}-transactions.csv`}>Export to CSV</CSVLink>
+      </Button>
     </>
   )
 }
