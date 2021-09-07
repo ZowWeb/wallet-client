@@ -1,0 +1,5 @@
+node_modules/**
+dist/**
+public/**
+src/index.js
+src/reportWebVitals.js
