@@ -3,7 +3,7 @@ import axios from 'axios'
 
 import AppReducer from './AppReducer'
 
-axios.defaults.baseURL = 'http://localhost:5000'
+axios.defaults.baseURL = process.env.REACT_APP_BASE_URL
 
 // Initial State
 const initialState = {
