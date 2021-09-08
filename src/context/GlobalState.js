@@ -7,7 +7,7 @@ axios.defaults.baseURL = process.env.REACT_APP_BASE_URL
 
 // Initial State
 const initialState = {
-  isLoading: true,
+  isLoading: false,
   message: {},
   wallet: {},
 }
@@ -39,9 +39,6 @@ export const GlobalProvider = ({ children }) => {
         payload: res.data,
       })
     } catch (error) {
-      dispatch({
-        type: 'IS_LOADING',
-      })
       setMessage(error.response?.data)
     }
   }
