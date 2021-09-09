@@ -7,8 +7,9 @@ import { GlobalContext } from '../context/GlobalState'
 const { Title } = Typography
 
 const Welcome = () => {
-  const { wallet, message, setMessage } = useContext(GlobalContext)
+  const { setLoading, wallet, message, setMessage } = useContext(GlobalContext)
   const onFinish = async values => {
+    setLoading()
     const { name, balance = 0 } = values
     const res = await axios.post('/api/setup', { name, balance })
     localStorage.setItem('walletId', res.data.id)

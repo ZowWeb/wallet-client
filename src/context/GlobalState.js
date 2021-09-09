@@ -20,6 +20,12 @@ export const GlobalProvider = ({ children }) => {
   const [ state, dispatch ] = useReducer(AppReducer, initialState)
 
   // Actions
+  function setLoading() {
+    dispatch({
+      type: 'IS_LOADING',
+    })
+  }
+
   function setMessage(message) {
     dispatch({
       type: 'SET_MESSAGE',
@@ -49,6 +55,7 @@ export const GlobalProvider = ({ children }) => {
         isLoading: state.isLoading,
         message: state.message,
         wallet: state.wallet,
+        setLoading,
         setWallet,
         setMessage,
       }}

@@ -7,9 +7,10 @@ import { GlobalContext } from '../context/GlobalState'
 const { Title } = Typography
 
 const CreateTransaction = () => {
-  const { message, setMessage, setWallet } = useContext(GlobalContext)
+  const { message, setMessage, setWallet, setLoading } = useContext(GlobalContext)
   const [ form ] = Form.useForm()
   const onFinish = async values => {
+    setLoading()
     let { amount, type = true, description } = values
     amount = type ? +amount : -amount
     try {

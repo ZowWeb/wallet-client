@@ -30,11 +30,12 @@ const Transactions = () => {
     } catch (error) {
       setMessage(error.response?.data)
     }
+    return () => {}
   }, [])
   return (
     <>
       <Divider><Title level={2}>Transactions</Title></Divider>
-      <Table dataSource={transactions} bordered>
+      <Table dataSource={transactions} bordered loading={!transactions.length}>
         <Column
           title="Date"
           dataIndex="date"
@@ -56,7 +57,7 @@ const Transactions = () => {
         <Column title="Description" dataIndex="description" key="description" />
         <Column title="Balance (&#8377;)" dataIndex="balance" key="balance" />
       </Table>
-      <Button type="primary">
+      <Button type="primary" loading={!transactions.length}>
         <CSVLink data={csvData} filename={`wallet-${wallet._id}-transactions.csv`}>Export to CSV</CSVLink>
       </Button>
     </>
