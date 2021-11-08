@@ -31,7 +31,7 @@ const Transactions = () => {
       setMessage(error.response?.data)
     }
     return () => {}
-  }, [])
+  }, [ wallet ])
   return (
     <>
       <Divider><Title level={2}>Transactions</Title></Divider>
