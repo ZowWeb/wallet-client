@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react'
-import { Layout, Spin } from 'antd'
+import { Layout, Spin, notification } from 'antd'
 
 import { GlobalContext } from '../context/GlobalState'
 
@@ -15,6 +15,7 @@ const LayoutWithWallet = ({ children }) => {
   return (
     <Layout className="layout" message={message}>
       {isLoading ? <Spin /> : children}
+      {message?.error429 && notification.error({ message: message.error429 })}
     </Layout>
   )
 }
